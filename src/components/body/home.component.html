@@ -1,0 +1,160 @@
+<h1>Home - Event Listener Demo</h1>
+
+<!-- 1. Sự kiện Chuột (Mouse Events) -->
+<div class="event-section">
+  <h2>1. Mouse Events</h2>
+  
+  <h3 (click)="onH1Click($event)" 
+      (dblclick)="onH1DblClick($event)" 
+      (mousedown)="onH1MouseDown($event)" 
+      (mouseup)="onH1MouseUp($event)"
+      style="cursor: pointer; border: 1px solid #ccc; padding: 5px; display: inline-block;">
+    Click, DblClick, MouseDown/Up Me
+  </h3>
+  <p>{{ mouseClickInfo()}}</p>
+
+  <div (mouseover)="onDivMouseOver($event)" 
+       (mouseout)="onDivMouseOut($event)"
+       style="background-color: lightblue; padding: 10px; margin-top: 10px;">
+    Hover Over/Out Me (MouseOver/MouseOut)
+    <p>{{ mouseOverOutInfo() }}</p>
+  </div>
+
+  <div (mouseenter)="onDivMouseEnter($event)"
+       (mouseleave)="onDivMouseLeave($event)"
+       style="background-color: lightgreen; padding: 10px; margin-top: 10px;">
+    Hover Enter/Leave Me (MouseEnter/MouseLeave - No Bubbling from Children)
+    <p>{{ mouseEnterLeaveInfo()}}</p>
+    <span style="background-color: yellow; padding: 5px;">Child Span</span>
+  </div>
+
+  <div (mousemove)="onDivMouseMove($event)" 
+       style="width: 200px; height: 100px; border: 1px solid black; margin-top: 10px;  position: relative;">
+    Move mouse here
+    <p>{{ mouseMoveInfo()}}</p>
+  </div>
+</div>
+
+<!-- 2. Sự kiện Bàn phím (Keyboard Events) -->
+<div class="event-section">
+  <h2>2. Keyboard Events</h2>
+  <input type="text" 
+         #keyInput
+         (keydown)="onInputKeyDown($event)" 
+         (keyup)="onInputKeyUp($event)" 
+         (keypress)="onInputKeyPress($event)"
+         placeholder="Type here for keydown, keyup, keypress">
+  <p>Key Info: {{ keyInfo()}}</p>
+
+  <input type="text" (keyup.enter)="onEnterPressed()" placeholder="Type and press Enter">
+  <p>{{ enterPressedInfo()}}</p>
+
+  <input type="text" (keyup.escape)="onEscapePressed()" placeholder="Type and press Escape">
+  <p>{{ escapePressedInfo()}}</p>
+
+  <input type="text" (keydown.shift.alt.t)="onShiftAltTPressed()" placeholder="Press Shift+Alt+T">
+  <p>{{ comboKeyPressedInfo()}}</p>
+</div>
+
+<!-- 3. Sự kiện Form (Form Events) -->
+<div class="event-section">
+  <h2>3. Form Events</h2>
+  <form (submit)="onFormSubmit($event)">
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name" #formNameInput>
+    <button type="submit">Submit Form</button>
+  </form>
+  <p>{{ formSubmitInfo()}}</p>
+
+  <label for="dataChange">Data (for change/input):</label>
+  <input type="text" id="dataChange" 
+         (change)="onInputChange($event)" 
+         (input)="onInputEvent($event)"
+         placeholder="Type for 'input', blur for 'change'">
+  <p>Change Event: {{ changeEventInfo()}}</p>
+  <p>Input Event: {{ inputEventInfo()}}</p>
+
+  <label for="focusBlur">Focus/Blur Target:</label>
+  <input type="text" id="focusBlur" 
+         (focus)="onInputFocus($event)" 
+         (blur)="onInputBlur($event)"
+         placeholder="Focus and Blur me">
+  <p>{{ focusBlurInfo()}}</p>
+</div>
+
+<!-- 4. Sự kiện Kéo và Thả (Drag & Drop Events) -->
+<div class="event-section">
+  <h2>4. Drag & Drop Events</h2>
+  <div #draggableElement
+       draggable="true" 
+       (dragstart)="onDragStart($event)" 
+       (dragend)="onDragEnd($event)"
+       style="width: 100px; height: 50px; background-color: orange; cursor: grab; text-align: center; line-height: 50px;">
+    Drag Me 1
+  </div>
+    <div #draggableElement1
+       draggable="true" 
+       (dragstart)="onDragStart($event)" 
+       (dragend)="onDragEnd($event)"
+       style="width: 100px; height: 50px; background-color: blue; cursor: grab; text-align: center; line-height: 50px;">
+    Drag Me 2
+  </div>
+    <div #draggableElement2
+       draggable="true" 
+       (dragstart)="onDragStart($event)" 
+       (dragend)="onDragEnd($event)"
+       style="width: 100px; height: 50px; background-color: red; cursor: grab; text-align: center; line-height: 50px;">
+    Drag Me 3
+  </div>
+  <div #dropZone
+       (dragover)="onDragOver($event)" 
+       (drop)="onDrop($event)"
+       style="width: 200px; height: 100px; border: 2px dashed #ccc; margin-top: 10px; text-align: center; line-height: 100px;">
+    Drop Zone
+  </div>
+  <p>{{ dragDropInfo()}}</p>
+</div>
+
+<!-- 5. Sự kiện Clipboard (Clipboard Events) -->
+<div class="event-section">
+  <h2>5. Clipboard Events</h2>
+  <input type="text" #clipboardInput 
+        (copy)="onCopy($event)" 
+        (cut)="onCut($event)" 
+        (paste)="onPaste($event)"
+        value="Text to copy/cut/paste here"
+        placeholder="Try copy, cut, paste here">
+  <p>{{ clipboardInfo()}}</p>
+</div>
+
+<!-- 6. Sự kiện Cửa sổ/Tài liệu (Window/Document Events) -->
+<!-- Để các sự kiện này hoạt động, chúng cần được gắn vào một phần tử trong template.
+     Hoặc bạn có thể sử dụng @HostListener trong component.ts (cách này gọn hơn cho window/document)
+     Ở đây, tôi gắn vào một div bao ngoài để minh họa cú pháp template. -->
+<div (window:scroll)="onWindowScroll($event)" 
+     (document:click)="onDocumentClick($event)"
+     style="border: 1px dashed green; padding: 10px; margin-top: 10px;">
+  <h2>6. Window/Document Events (Scroll window / Click anywhere on document)</h2>
+  <p>Window Scroll Y: {{ windowScrollY()}}</p>
+  <p>{{ documentClickInfo()}}</p>
+</div>
+
+<!-- Thông báo chung -->
+<p *ngIf="generalMessage" class="general-message">{{ generalMessage()}}</p>
+
+<!-- Original paragraphs from user -->
+<div class="event-section">
+  <h2>Original Content</h2>
+  <p>
+    Welcome to the home page of our simple Angular application!
+  </p>
+  <p>
+    This is where you can find the latest updates and information about our app.
+  </p>
+  <p>
+    Feel free to explore the other sections of the app using the navigation links above.
+  </p>
+  <p>
+    If you have any questions or feedback, don't hesitate to reach out to us.
+  </p>
+</div>

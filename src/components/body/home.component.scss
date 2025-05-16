@@ -1,0 +1,31 @@
+  .event-section {
+  margin-bottom: 20px;
+  padding: 15px;
+  border: 1px solid #eee;
+  border-radius: 5px;
+
+  h2 {
+    margin-top: 0;
+    color: #337ab7;
+  }
+
+  p {
+    font-size: 0.9em;
+    color: #555;
+  }
+
+  input[type="text"] {
+    margin-right: 10px;
+    margin-bottom: 5px;
+    padding: 5px;
+  }
+}
+
+.general-message {
+  margin-top: 15px;
+  padding: 10px;
+  background-color: #f0f8ff;
+  border: 1px solid #b0e0e6;
+  border-radius: 4px;
+  font-weight: bold;
+}
